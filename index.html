@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- Set Title and Icon -->
-    <title>Mini RPG</title>
-    <link rel="icon" href="./assets/images/favicon.ico" />
+    <title>Really hard quiz</title>
+    <!-- <link rel="icon" href="./assets/images/favicon.ico" /> -->
 
     <!-- Load jQuery/JQuery UI/Bootstrap -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
@@ -22,9 +22,35 @@
 
 
 <body>
+    <header>
+        <div class='wrapper'>
+            <h1 id='header-text'>Name of Quiz</h1>
+        </div>
+    </header>
+    <div id='content'>
+        <div class='wrapper'>
+            <section id='selection'>
+                <div id='selection-text'>s-text</div>
+                <button id='option-1' class='option'>s-1</button>
+            </section>
+            <section id='question'>
+                <div id='question-text'>q-text</div>
+                <div id='timer'>99</div>
+                <div id='choices'>
+                    <button id='choice-1' class='choice'>1</button>
+                    </br>
+                    <button id='choice-2' class='choice'>2</button>
+                    </br>
+                    <button id='choice-3' class='choice'>3</button>
+                    </br>
+                    <button id='choice-4' class='choice'>4</button>
+                </div>
+            </section>
+        </div>
+    </div>
 
     <!-- Load game.js -->
-    <script type="text/javascript" src="./assets/javascript/game.js"></script>
+    <script type="text/javascript" src="./assets/js/javascript.js"></script>
 </body>
 
 </html>
