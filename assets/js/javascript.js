@@ -1,36 +1,52 @@
 function startNewGame() {
     var questions = [
         {
-            question: 'this is question 1',
-            answers: ['answer 1-1',
-                'answer 1-2',
-                'answer 1-3',
-                'answer 1-4'],
-            correct: 'answer 1-1'
+            question: 'Which of these is not an animal?',
+            answers: ['cow.',
+                'chicken.',
+                'dog.',
+                'chair.'],
+            correct: 'chair.'
         },
         {
-            question: 'this is question 2',
-            answers: ['answer 2-1',
-                'answer 2-2',
-                'answer 2-3',
-                'answer 2-4'],
-            correct: 'answer 2-2'
+            question: 'Which of these is a shape?',
+            answers: ['square.',
+                'hand.',
+                'cat.',
+                'pants.'],
+            correct: 'square.'
         },
         {
-            question: 'this is question 3',
-            answers: ['answer 3-1',
-                'answer 3-2',
-                'answer 3-3',
-                'answer 3-4'],
-            correct: 'answer 3-3'
+            question: 'Which of these words does not start with the letter \'b\'?',
+            answers: ['big.',
+                'bad.',
+                'boy.',
+                'apple.'],
+            correct: 'apple.'
         },
         {
-            question: 'this is question 4',
-            answers: ['answer 4-1',
-                'answer 4-2',
-                'answer 4-3',
-                'answer 4-4'],
-            correct: 'answer 4-4'
+            question: 'Which of these is food?',
+            answers: ['potato.',
+                'box.',
+                'cup.',
+                'house.'],
+            correct: 'potato.'
+        },
+        {
+            question: 'Which of these is not a word?',
+            answers: ['man.',
+                'up.',
+                'car.',
+                '~.'],
+            correct: '~.'
+        },
+        {
+            question: 'Which of these is a color?',
+            answers: ['red.',
+                'paper.',
+                'floor.',
+                'sit.'],
+            correct: 'potato.'
         }
     ];
 
@@ -43,6 +59,7 @@ function startNewGame() {
             timer.canLose = canLose;
             timer.maxTime = maxTime;
             timer.reset();
+            timer.drawNumber();
             timer.counter = setInterval(function () { timer.countDown(timer.canLose) }, 1000);
         },
         stop: function () {
@@ -58,70 +75,100 @@ function startNewGame() {
         },
         countDown: function () {
             timer.timeLeft--;
-            $('#timer').text(timer.timeLeft);
+            timer.drawNumber();
 
-            if (timer.timeLeft === 0) {
-                timer.stop();                
+            if (timer.timeLeft === -1) {
+                timer.stop();
                 if (timer.canLose) displayTimeOutScreen();
             };
+        },
+        drawNumber: function () {
+            $('#timer').finish();
+            $('#timer').animate({ opacity: 1 }, 0, function () {
+                $('#timer').text(timer.timeLeft);
+                $('#timer').animate({ opacity: 0 }, 1000);
+            })
         }
     };
 
     var questionsBank = questions.slice();
+    var curQuestion;
 
     function displayStartScreen() {
         $('#question').hide();
         $('#selection').show();
-        $('#selection-text').text("Starting Screen");
-        $('#option-1').text("Start New Game");
+        $('#selection-text').text("Simple Starting Screen.");
+        $('#option-1').text("Click me.");
     }
 
     function displayIncorrectAnswerScreen() {
-        $('#question').hide();
-        $('#selection').show();
-        $('#selection-text').text("Incorrect Answer: Display what the right answer");
-        $('#option-1').text("Play Again");
+        $('#question-text').text("Wrong. The correct answer was " + curQuestion.correct);
+        $('#choices').hide();
+        timer.start(false, 3);
+        setTimeout(function () {
+            $('#choices').show();
+            newQuestion();
+        }
+            , 4000);
     };
 
-    function displayTimeOutScreen() {        
-        $('#question').hide();
-        $('#selection').show();
-        $('#selection-text').text("Timed Out: Display what the right answer");
-        $('#option-1').text("Play Again");        
+    function displayTimeOutScreen() {
+        $('#question-text').text("Oh no! You ran out of time... The correct answer was " + curQuestion.correct);
+        $('#choices').hide();
+        timer.start(false, 3);
+        setTimeout(function () {
+            $('#choices').show();
+            newQuestion();
+        }
+            , 4000);
     };
 
-    function displayWinScreen() {
-        $('#question').hide();
+    function displayResultScreen() {
+        $('#selection-qt').text("There's no questions left.");
+        $('#selection-text').text("You finished the Quiz. Congratulations.");
+        $('#selection-af').text("Play again? You know what to do.");
         $('#selection').show();
-        $('#selection-text').text("w0w you won and beat the game so cool");
-        $('#option-1').text("Play Again");
+        $('#question').hide();
+        timer.stop();
     };
 
-    function displayCorrectAnswerScreen() {        
-        timer.start(false, 5);
-        setTimeout(newQuestion(), 5000);
+    function displayCorrectAnswerScreen() {
+        $('#choices').hide();
+        $('#question-text').text("Correct. You are smart. Probably.")
+        timer.start(false, 3);
+        setTimeout(function () {
+            $('#choices').show();
+            newQuestion();
+        }
+            , 4000);
     };
 
     function newQuestion() {
-        curQuestion = getQuestion();
-        displayQuestion(curQuestion);
-        timer.start(true, 30);
+        if (questionsBank.length === 0) {
+            displayResultScreen();
+        } else {
+            curQuestion = getQuestion();
+            displayQuestion(curQuestion);
+            timer.start(true, 20);
+        }
     };
 
     function checkCorrect(choice) {
-        if (choice === curQuestion.correct && questionsBank.length === 0) displayWinScreen();
-        else if (choice === curQuestion.correct) displayCorrectAnswerScreen();
+        if (choice === curQuestion.correct) displayCorrectAnswerScreen();
         else displayIncorrectAnswerScreen();
     };
 
     function displayQuestion() {
         $('#selection').hide();
-        $('#question').show();        
+        $('#question').show();
+        $('#question-number').html("Simple Question #" + Math.abs(questions.length - questionsBank.length));
         $('#question-text').text(curQuestion.question);
-        $('#choice-1').text(curQuestion.answers[0]);
-        $('#choice-2').text(curQuestion.answers[1]);
-        $('#choice-3').text(curQuestion.answers[2]);
-        $('#choice-4').text(curQuestion.answers[3]);
+        var choiceArray = [0, 1, 2, 3];
+        // OKAY THIS LOOKS WEIRD AND CRAZY BUT ALL IT DOES IS RANDOMIZE THE ORDER THE ANSWERS ARE IN OKAY?        
+        $('#choice-1').text(curQuestion.answers[choiceArray.splice(Math.floor(Math.random() * choiceArray.length - 1), 1)[0]]);
+        $('#choice-2').text(curQuestion.answers[choiceArray.splice(Math.floor(Math.random() * choiceArray.length - 1), 1)[0]]);
+        $('#choice-3').text(curQuestion.answers[choiceArray.splice(Math.floor(Math.random() * choiceArray.length - 1), 1)[0]]);
+        $('#choice-4').text(curQuestion.answers[choiceArray.splice(Math.floor(Math.random() * choiceArray.length - 1), 1)[0]]);
     };
 
     function getQuestion() {

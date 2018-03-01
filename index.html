@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- Set Title and Icon -->
-    <title>Really hard quiz</title>
+    <title>Simple and Basic Quiz</title>
     <!-- <link rel="icon" href="./assets/images/favicon.ico" /> -->
 
     <!-- Load jQuery/JQuery UI/Bootstrap -->
@@ -18,32 +18,43 @@
     <!-- Load reset.css & style.css -->
     <link rel="stylesheet" type="text/css" href="./assets/css/reset.css">
     <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
+
+    <!-- Load hover effects -->
+    <link rel="stylesheet" type="text/css" href="./assets/css/hover.css">
+
+    <!-- Load Font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 </head>
 
 
 <body>
     <header>
-        <div class='wrapper'>
-            <h1 id='header-text'>Name of Quiz</h1>
+        <div id='header-wrapper'>
+            <h1 id='header-text'>Simple Quiz.</h1>
         </div>
     </header>
     <div id='content'>
-        <div class='wrapper'>
+        <div id='content-wrapper'>
             <section id='selection'>
+                <div id='selection-qt'>Hi. Welcome to my quiz.</div>
                 <div id='selection-text'>s-text</div>
-                <button id='option-1' class='option'>s-1</button>
+                <div id='selection-af'>Yay.</div>
+                <button id='option-1' class='option hvr-fade'>s-1</button>
             </section>
             <section id='question'>
+                <div id='question-number'>q-number</div>
                 <div id='question-text'>q-text</div>
-                <div id='timer'>99</div>
+                <div id='timer-wrapper'>
+                    <div id='timer'>99</div>
+                </div>
                 <div id='choices'>
-                    <button id='choice-1' class='choice'>1</button>
+                    <button id='choice-1' class='choice hvr-fade'>1</button>
                     </br>
-                    <button id='choice-2' class='choice'>2</button>
+                    <button id='choice-2' class='choice hvr-fade'>2</button>
                     </br>
-                    <button id='choice-3' class='choice'>3</button>
+                    <button id='choice-3' class='choice hvr-fade'>3</button>
                     </br>
-                    <button id='choice-4' class='choice'>4</button>
+                    <button id='choice-4' class='choice hvr-fade'>4</button>
                 </div>
             </section>
         </div>

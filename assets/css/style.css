@@ -1,16 +1,90 @@
-body {
+html {
     font-size: 1em;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #fafafa;
 }
 
-.wrapper {
-    width: 960px;
+body {    
+    color: #333;
+}
+
+#header-wrapper {
+    width: 760px;
     margin: auto;
+    border-bottom: 3px solid #333;
 }
 
 header {
-    margin-top: 100px;
+    margin-top: 100px;  
+    padding-bottom: 2.618em;  
 }
 
-h1 {
+#header-text {
+    padding-bottom: 0.236em;
     font-size: 4.236em;
+    text-align: center;    
 }
+
+#content-wrapper {
+    width: 700px;
+    margin: auto;
+    text-align: center;    
+}
+
+#selection-qt {
+    font-size: 1.618em;    
+}
+
+#selection-af {
+    font-size: 1em;    
+    padding-bottom: 1em;
+    margin: 10px;
+}
+
+
+#selection-text {
+    font-size: 2.618em;        
+}
+
+button {
+    width: 70%;
+    font-size: 1em;
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+    
+    background: none;
+    border:none;
+}
+
+#option-1 {
+    font-size: 1.618em;
+}
+
+#question-number {
+    font-size: 1.618em;    
+    /* width: 10px; */
+}
+
+#question-text {
+    font-size: 2.618em;
+    padding-bottom: 0.382em;    
+}
+
+#timer-wrapper {
+    width: 60px;
+    margin: 0 auto;
+    padding-bottom: 0.382em;
+    /* border-bottom: 3px solid #333; */
+}
+
+#timer {    
+    position: relative;
+    font-size: 1.618em;       
+    margin: 0 10px;    
+}
+
+.choice {
+    font-size: 1.618em;
+}
+
+button:focus {outline:0;}
