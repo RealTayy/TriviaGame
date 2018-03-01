@@ -5,36 +5,36 @@ function startNewGame() {
             answers: ['cow.',
                 'chicken.',
                 'dog.',
-                'chair.'],
-            correct: 'chair.'
+                'alto saxophone.'],
+            correct: 'alto saxophone.'
         },
         {
             question: 'Which of these is a shape?',
-            answers: ['square.',
+            answers: ['quadrilateral.',
                 'hand.',
                 'cat.',
                 'pants.'],
-            correct: 'square.'
+            correct: 'quadrilateral.'
         },
         {
             question: 'Which of these words does not start with the letter \'b\'?',
             answers: ['big.',
                 'bad.',
                 'boy.',
-                'apple.'],
-            correct: 'apple.'
+                'aerodynamics.'],
+            correct: 'aerodynamics.'
         },
         {
             question: 'Which of these is food?',
-            answers: ['potato.',
+            answers: ['salisbury steak.',
                 'box.',
                 'cup.',
                 'house.'],
-            correct: 'potato.'
+            correct: 'salisbury steak.'
         },
         {
             question: 'Which of these is not a word?',
-            answers: ['man.',
+            answers: ['paper.',
                 'up.',
                 'car.',
                 '~.'],
@@ -42,11 +42,43 @@ function startNewGame() {
         },
         {
             question: 'Which of these is a color?',
-            answers: ['red.',
-                'paper.',
-                'floor.',
+            answers: ['dull opaline green.',
+                'man.',
+                'fan.',
                 'sit.'],
-            correct: 'potato.'
+            correct: 'dull opaline green.'
+        },
+        {
+            question: 'Which of these is not a greeting?',
+            answers: ['hi.',
+                'hello.',
+                'sup.',
+                'pterodactyl.'],
+            correct: 'pterodactyl.'
+        },
+        {
+            question: 'Which of these is not a number?',
+            answers: ['one.',
+                'two.',
+                'three.',
+                'rhinoceros.'],
+            correct: 'rhinoceros.'
+        },
+        {
+            question: 'Which of these objects is the largest?',
+            answers: ['ant.',
+                'onion.',
+                'pig.',
+                'milky way galaxy.'],
+            correct: 'milky way galaxy.'
+        },
+        {
+            question: 'Which of these words looks like I smashed my keys on my keyboard?',
+            answers: ['friend.',
+                'robot.',
+                'bowl.',
+                'a^JF$#a4fkxa$LkIO$1!.'],
+            correct: 'a^JF$#a4fkxa$LkIO$1!.'
         }
     ];
 
@@ -102,6 +134,7 @@ function startNewGame() {
     }
 
     function displayIncorrectAnswerScreen() {
+        addBlock('incorrect');
         $('#question-text').text("Wrong. The correct answer was " + curQuestion.correct);
         $('#choices').hide();
         timer.start(false, 3);
@@ -113,8 +146,21 @@ function startNewGame() {
     };
 
     function displayTimeOutScreen() {
-        $('#question-text').text("Oh no! You ran out of time... The correct answer was " + curQuestion.correct);
+        addBlock('timeout');
+        $('#question-text').text("You ran out of time. The correct answer was " + curQuestion.correct);
         $('#choices').hide();
+        timer.start(false, 3);
+        setTimeout(function () {
+            $('#choices').show();
+            newQuestion();
+        }
+            , 4000);
+    };
+
+    function displayCorrectAnswerScreen() {
+        addBlock('correct');
+        $('#choices').hide();
+        $('#question-text').text("Correct. You are smart. Probably.")
         timer.start(false, 3);
         setTimeout(function () {
             $('#choices').show();
@@ -132,15 +178,18 @@ function startNewGame() {
         timer.stop();
     };
 
-    function displayCorrectAnswerScreen() {
-        $('#choices').hide();
-        $('#question-text').text("Correct. You are smart. Probably.")
-        timer.start(false, 3);
-        setTimeout(function () {
-            $('#choices').show();
-            newQuestion();
+    function addBlock(result) {
+        var $newBlock = $('<div class=\'block\'>' + Math.abs(questions.length - questionsBank.length) + '</div>');
+        // Determines what color to give to $newBlock
+        switch (result) {
+            case 'correct': $newBlock.css('background-color', '#A8CE00'); break;
+            case 'incorrect': $newBlock.css('background-color', '#F47600'); break;
+            case 'timeout': $newBlock.css('background-color', '#009CBF'); break;
         }
-            , 4000);
+        $('#results').append($newBlock);
+        $newBlock.animate({ opacity: 0, left: "+=50" }, 0, function () {
+            $newBlock.animate({ opacity: 1, left: '-=50' }, 1000);
+        })
     };
 
     function newQuestion() {
@@ -149,7 +198,7 @@ function startNewGame() {
         } else {
             curQuestion = getQuestion();
             displayQuestion(curQuestion);
-            timer.start(true, 20);
+            timer.start(true, 10);
         }
     };
 
@@ -180,6 +229,7 @@ function startNewGame() {
     $("#option-1").click(function () { initializeGame() });
 
     function initializeGame() {
+        $('#results').empty();
         questionsBank = questions.slice();
         newQuestion();
     };
